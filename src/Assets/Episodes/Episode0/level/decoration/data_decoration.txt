@@ -1,0 +1,7 @@
+'hallway115x75.png' (115,75)(447,455)
+'living room background222x260.png' (222,260)(415,183)
+'Creeper and Android100x36.png' (100,36)(225,188)
+'kitchen background234x84.png' (234,84)(310,0)
+'bathroom background145x110.png' (145,110)(29,84)
+'badroom background262x173.png' (262,173)(72,321)
+'floor694x564.png' (694,564)(0,0)
