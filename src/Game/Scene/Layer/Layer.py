@@ -1,4 +1,3 @@
-import random
 from typing import Tuple, List, Optional
 from src.Game.Sprite import Sprite
 from src.Game.Scene.Camera import Camera

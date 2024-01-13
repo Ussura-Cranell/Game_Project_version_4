@@ -1,5 +1,6 @@
 from typing import Tuple, List
 import pygame.image
+import os
 
 
 class SceneInitialization:
@@ -18,7 +19,8 @@ class SceneInitialization:
             from src.Game.GameObject.StaticObject import Decoration
             decoration = Decoration.Decoration(name=name, layer=layer, size=size)
             print(f'name: {name}')
-            image = pygame.image.load(f'..\..\src\Assets\Episodes\Episode0\level\{name}').convert_alpha()
+
+            image = pygame.image.load(os.path.join('src', 'Assets/Episodes/Episode0/level/') + name).convert_alpha()
             decoration.sprite.set_surface(image)
             decoration.sprite.rect.topleft = (point_reference[0] + pos[0], point_reference[1] + pos[1])
 
@@ -33,7 +35,8 @@ class SceneInitialization:
 
             from src.Game.GameObject.StaticObject import Decoration
             decoration = Decoration.Decoration(name=name, layer=layer, size=size, pos=(point_reference[0] + ltop_pos[0], point_reference[1] + ltop_pos[1]))
-            image = pygame.image.load(f'..\..\src\Assets\Episodes\Episode0\level\objects\{name}').convert_alpha()
+
+            image = pygame.image.load(os.path.join('src', 'Assets/Episodes/Episode0/level/objects/') + name).convert_alpha()
             decoration.sprite.set_surface(image)
             id[0] += 1
             from src.Game.GameObject.StaticObject import Trigger
@@ -183,7 +186,8 @@ class SceneInitialization:
         self._scene.get_layer(2).set_drawing_by_coordinates(True)
         player.set_movement_speed(5)
 
-        player_animation_sheet = pygame.image.load(r'..\..\src\Assets\Sprites\Entity\Human\player47x45.png')
+
+        player_animation_sheet = pygame.image.load(os.path.join('src', 'Assets/Sprites/Entity/Human/player47x45.png'))
         running_player_animation_chunks = Multitool.x_y_transform_spritesheet_to_animation(
             player_animation_sheet, (47, 45))
 
@@ -232,7 +236,8 @@ class SceneInitialization:
         from src.Game.GameObject.Entity import Entity
         tv = Entity.Entity(name=str(id), layer=3, size=(50, 22))
         tv.sprite.rect.topleft = (point_reference[0] + 524, point_reference[1] + 200)
-        dance_9mm = pygame.image.load(r'..\..\src\Assets\testAnimations\dancespritesheet.png')
+
+        dance_9mm = pygame.image.load(os.path.join('src', 'Assets/testAnimations/dancespritesheet.png'))
         dance_9mm = Multitool.x_y_transform_spritesheet_to_animation(dance_9mm, (50, 22))
         # exit()
 
@@ -264,7 +269,7 @@ class SceneInitialization:
         self._soundstorage = Sound.SoundStorage()
         self._soundmanager = SoundManager.SoundManager()
         tv_music = Sound.Sound(Sound.SoundId.Memphis_Cult9Mm,
-                               r'..\..\src\Assets\Music\Memphis Cult - 9MM (Lyrics) _ watch my 9mm go bang (256  kbps).mp3',
+                               os.path.join('src', 'Assets/Music/Memphis Cult - 9MM (Lyrics) _ watch my 9mm go bang (256  kbps).mp3'),
                                0,
                                self.scene.surface.get_rect().center,
                                tv.sprite.rect.center,
@@ -283,7 +288,8 @@ class SceneInitialization:
         from src.Game.GameObject.Entity import Entity
         spikers = Entity.Entity(name=str(id), layer=1, size=(32, 64))
         spikers.sprite.rect.topleft = (point_reference[0] + 593, point_reference[1] + 188)
-        spikers_animation = pygame.image.load(r'..\..\src\Assets\testAnimations\spikers.png')
+
+        spikers_animation = pygame.image.load(os.path.join('src', 'Assets/testAnimations/spikers.png'))
         spikers_animation = Multitool.x_y_transform_spritesheet_to_animation(spikers_animation, (32, 64))
 
         animation = Animaton.Animation(id_animation.ANIMATION_1,
@@ -306,7 +312,7 @@ class SceneInitialization:
         self._shared_resources['spikers'] = spikers
 
         character_steps = Sound.Sound(Sound.SoundId.SOUND_PLAYER_STEP,
-                               r'..\..\src\Assets\Sounds\Other\player steps4.mp3',
+                               os.path.join('src', 'Assets/Sounds/Other/player steps4.mp3'),
                                -1,
                                self.scene.surface.get_rect().center,
                                self.scene.surface.get_rect().center,

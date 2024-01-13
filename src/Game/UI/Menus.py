@@ -1,12 +1,13 @@
 import pygame.image
 from src.Game.UI.Button import Button
+import os
 
 
 class MainMenu:
     def __init__(self, screen: pygame.Surface):
         self._screen = screen
 
-        image = pygame.image.load(r'..\..\src\Assets\Sprites\74087bb27eb2d8984a558bbbd76ddef3.png').convert_alpha()
+        image = pygame.image.load(os.path.join('src', 'Assets/Sprites/74087bb27eb2d8984a558bbbd76ddef3.png')).convert_alpha()
         image = MainMenu.size_image(image, 0.5)
         self._text_menu = [image, image.get_rect()]
         self._text_menu[1].top = min(image.get_size())*1.5
@@ -16,25 +17,31 @@ class MainMenu:
         self._buttons = []
 
         image_nothing = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Large Buttons\Play Button.png').convert_alpha()
+            os.path.join('src',
+                         'Assets/Sprites/Menu Buttons/Large Buttons/Large Buttons/Play Button.png')).convert_alpha()
         image_selected = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Colored Large Buttons\Play col_Button.png').convert_alpha()
+            os.path.join('src',
+                         'Assets/Sprites/Menu Buttons/Large Buttons/Colored Large Buttons/Play col_Button.png')).convert_alpha()
         image_nothing = MainMenu.size_image(image_nothing, 0.5)
         image_selected = MainMenu.size_image(image_selected, 0.5)
         self._buttons.append(Button.Button(Button.ButtonId.PLAY_BUTTON, image_nothing, image_selected))
 
         image_nothing = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Large Buttons\Settings Button.png').convert_alpha()
+            os.path.join('src',
+                         'Assets/Sprites/Menu Buttons/Large Buttons/Large Buttons/Settings Button.png')).convert_alpha()
         image_selected = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Colored Large Buttons\Settings  col_Button.png').convert_alpha()
+            os.path.join('src',
+                         'Assets/Sprites/Menu Buttons/Large Buttons/Colored Large Buttons/Settings  col_Button.png')).convert_alpha()
         image_nothing = MainMenu.size_image(image_nothing, 0.5)
         image_selected = MainMenu.size_image(image_selected, 0.5)
         self._buttons.append(Button.Button(Button.ButtonId.SETTING_BUTTON, image_nothing, image_selected))
 
         image_nothing = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Large Buttons\Exit Button.png').convert_alpha()
+            os.path.join('src',
+                         'Assets/Sprites/Menu Buttons/Large Buttons/Large Buttons/Exit Button.png')).convert_alpha()
         image_selected = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Colored Large Buttons\Exit  col_Button.png').convert_alpha()
+            os.path.join('src',
+                         'Assets/Sprites/Menu Buttons/Large Buttons/Colored Large Buttons/Exit  col_Button.png')).convert_alpha()
         image_nothing = MainMenu.size_image(image_nothing, 0.5)
         image_selected = MainMenu.size_image(image_selected, 0.5)
         self._buttons.append(Button.Button(Button.ButtonId.EXIT_BUTTON, image_nothing, image_selected))
@@ -57,14 +64,14 @@ class MainMenu:
         self._soundid = Sound.SoundId
         self._soundstorage = Sound.SoundStorage()
         Sound.Sound(Sound.SoundId.SELECTED_BUTTON,
-                    r'..\Assets\Sounds\UI\selected.mp3',
+                    os.path.join('src', 'Assets/Sounds/UI/selected.mp3'),
                     0,
                     screen.get_rect().center,
                     screen.get_rect().center,
                     max(screen.get_rect().size))
 
         Sound.Sound(Sound.SoundId.ENTERED_BUTTON,
-                    r'..\Assets\Sounds\UI\enter.mp3',
+                    os.path.join('src', 'Assets/Sounds/UI/enter.mp3'),
                     0,
                     screen.get_rect().center,
                     screen.get_rect().center,
@@ -122,25 +129,25 @@ class Play:
         self._buttons = []
 
         image_nothing = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Episode\episode1.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Episode/episode1.png')).convert_alpha()
         image_selected = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Episode\color episode1.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Episode/color episode1.png')).convert_alpha()
         image_nothing = MainMenu.size_image(image_nothing, 0.5)
         image_selected = MainMenu.size_image(image_selected, 0.5)
         self._buttons.append(Button.Button(Button.ButtonId.EPISODE_1, image_nothing, image_selected))
 
         image_nothing = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Episode\episode2.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Episode/episode2.png')).convert_alpha()
         image_selected = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Episode\color episode2.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Episode/color episode2.png')).convert_alpha()
         image_nothing = MainMenu.size_image(image_nothing, 0.5)
         image_selected = MainMenu.size_image(image_selected, 0.5)
         self._buttons.append(Button.Button(Button.ButtonId.EPISODE_2, image_nothing, image_selected))
 
         image_nothing = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Episode\episode3.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Episode/episode3.png')).convert_alpha()
         image_selected = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Episode\color episode3.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Episode/color episode3.png')).convert_alpha()
         image_nothing = MainMenu.size_image(image_nothing, 0.5)
         image_selected = MainMenu.size_image(image_selected, 0.5)
         self._buttons.append(Button.Button(Button.ButtonId.EPISODE_3, image_nothing, image_selected))
@@ -152,9 +159,9 @@ class Play:
             num += button.rect.h + 50
 
         image_nothing = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Large Buttons\Back Button.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Large Buttons/Large Buttons/Back Button.png')).convert_alpha()
         image_selected = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Colored Large Buttons\Back  col_Button.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Large Buttons/Colored Large Buttons/Back  col_Button.png')).convert_alpha()
         image_nothing = MainMenu.size_image(image_nothing, 0.4)
         image_selected = MainMenu.size_image(image_selected, 0.4)
         button = Button.Button(Button.ButtonId.BACK_BUTTON, image_nothing, image_selected)
@@ -173,14 +180,14 @@ class Play:
         self._soundstorage = Sound.SoundStorage()
 
         Sound.Sound(Sound.SoundId.SELECTED_BUTTON,
-                    r'..\Assets\Sounds\UI\selected.mp3',
+                    os.path.join('src', 'Assets/Sounds/UI/selected.mp3'),
                     0,
                     screen.get_rect().center,
                     screen.get_rect().center,
                     max(screen.get_rect().size))
 
         Sound.Sound(Sound.SoundId.ENTERED_BUTTON,
-                    r'..\Assets\Sounds\UI\enter.mp3',
+                    os.path.join('src', 'Assets/Sounds/UI/enter.mp3'),
                     0,
                     screen.get_rect().center,
                     screen.get_rect().center,
@@ -245,17 +252,19 @@ class Play_Menu:
         self._buttons = []
 
         image_nothing = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Large Buttons\Continue Button.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Large Buttons/Large Buttons/Continue Button.png')).convert_alpha()
         image_selected = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Colored Large Buttons\Continue  col_Button.png').convert_alpha()
+            os.path.join('src', 'Assets/Sprites/Menu Buttons/Large Buttons/Colored Large Buttons/Continue  col_Button.png')).convert_alpha()
         image_nothing = MainMenu.size_image(image_nothing, 0.5)
         image_selected = MainMenu.size_image(image_selected, 0.5)
         self._buttons.append(Button.Button(Button.ButtonId.PLAY_CONTINUE_MENU, image_nothing, image_selected))
 
         image_nothing = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Large Buttons\Quit Button.png').convert_alpha()
+            os.path.join('src',
+                         'Assets/Sprites/Menu Buttons/Large Buttons/Large Buttons/Quit Button.png')).convert_alpha()
         image_selected = pygame.image.load(
-            r'..\Assets\Sprites\Menu Buttons\Large Buttons\Colored Large Buttons\Quit  col_Button.png').convert_alpha()
+            os.path.join('src',
+                         'Assets/Sprites/Menu Buttons/Large Buttons/Colored Large Buttons/Quit  col_Button.png')).convert_alpha()
         image_nothing = MainMenu.size_image(image_nothing, 0.5)
         image_selected = MainMenu.size_image(image_selected, 0.5)
         self._buttons.append(Button.Button(Button.ButtonId.PLAY_QUIT_MENU, image_nothing, image_selected))
@@ -271,14 +280,14 @@ class Play_Menu:
         self._soundid = Sound.SoundId
 
         Sound.Sound(Sound.SoundId.SELECTED_BUTTON,
-                    r'..\Assets\Sounds\UI\selected.mp3',
+                    os.path.join('src', 'Assets/Sounds/UI/selected.mp3'),
                     0,
                     screen.get_rect().center,
                     screen.get_rect().center,
                     max(screen.get_rect().size))
 
         Sound.Sound(Sound.SoundId.ENTERED_BUTTON,
-                    r'..\Assets\Sounds\UI\enter.mp3',
+                    os.path.join('src', 'Assets/Sounds/UI/enter.mp3'),
                     0,
                     screen.get_rect().center,
                     screen.get_rect().center,
