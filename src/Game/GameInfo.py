@@ -1,7 +1,7 @@
 from typing import Tuple
-
 import psutil
 import pygame
+
 
 class GameInfo:
     _game_info = None

@@ -77,3 +77,5 @@ class InputEvent:
 
             elif event.type == pygame.QUIT:
                 Event.Event(Event.EventId.WINDOW_CLOSE)
+                pygame.quit()
+                exit(0)
