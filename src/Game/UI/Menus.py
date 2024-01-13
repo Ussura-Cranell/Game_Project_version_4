@@ -12,8 +12,6 @@ class MainMenu:
         self._text_menu = [image, image.get_rect()]
         self._text_menu[1].top = min(image.get_size())*1.5
         self._text_menu[1].centerx = screen.get_rect().centerx
-
-
         self._buttons = []
 
         image_nothing = pygame.image.load(
@@ -108,7 +106,7 @@ class MainMenu:
 
     @classmethod
     def size_image(cls, surface: pygame.Surface, size: float) -> pygame.Surface:
-        return pygame.transform.scale(surface, (surface.get_size()[0] * size, surface.get_size()[1] * size))
+        return pygame.transform.scale(surface, (int(surface.get_size()[0] * size), int(surface.get_size()[1] * size)))
 
 class SettingsMenu:
     def __init__(self):
