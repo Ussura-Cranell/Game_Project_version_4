@@ -37,7 +37,9 @@ class Init:
             screen.blit(scene.camera.surface, scene.camera.rect)
             pygame.display.update()
 
+            print(f'FPS: {window.clock.get_fps()}')
             print(f'Memory used: {gameinfo.takes_MB} MB')
+
             window.clock.tick(30)
 
             if type(scene.uimanager.current_menu) is Menus.Close:

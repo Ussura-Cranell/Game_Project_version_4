@@ -1,3 +1,4 @@
+
 from src.Game import GameInfo
 from src.Game.Window import Window
 from src.Game.Managers import EventManager, AnimationManager, ObjManager, SoundManager
