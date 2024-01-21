@@ -96,7 +96,7 @@ class Player(Entity.Entity):
             # print('игрок не двигается')
 
             #print(f'super().current_animation: {super().current_animation}')
-            print(f'self.current_animation: {self.current_animation}')
+            # print(f'self.current_animation: {self.current_animation}')
 
             # exit()
             self.current_animation.set_stop_animation(True)

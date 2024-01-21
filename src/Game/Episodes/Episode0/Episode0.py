@@ -50,7 +50,7 @@ class Init:
                 screen.blit(scene.camera.surface, scene.camera.rect)
                 pygame.display.flip()
 
-                window.clock.tick(25)
+                window.clock.tick(22)
 
             elif isinstance(scene.uimanager.current_menu, Menus.Play_Menu):
                 window.clear_console()
