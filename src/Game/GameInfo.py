@@ -17,7 +17,7 @@ class GameInfo:
         if GameInfo._initialized: return None
 
         # print('init GameInfo')
-        self._game_title: str = 'The Noisses is killing'
+        self._game_title: str = 'The Noisses is killing (demo)'
         self._game_icon: pygame.Surface = pygame.Surface((100, 100))
         self._game_icon.fill((255, 255, 255))
         self._screen_size = (1200, 760)
