@@ -1,9 +1,12 @@
+from typing import List
+
 from src.Game.Sound import Sound
 
 import pygame
 
 class SoundManager:
     _sound_manager = None
+    _initialized = False
     _MAX_CHANNELS = 8
 
     def __new__(cls):
@@ -12,11 +15,17 @@ class SoundManager:
         return cls._sound_manager
 
     def __init__(self):
+
+        if SoundManager._initialized: return None
+
+        # print('init SoundManager')
         pygame.mixer.init()
 
         pygame.mixer.set_num_channels(SoundManager._MAX_CHANNELS)
         self._channels = [pygame.mixer.Channel(i) for i in range(SoundManager._MAX_CHANNELS)]
         self._sounds = [None for i in range(SoundManager._MAX_CHANNELS)]
+
+        SoundManager._initialized = True
 
     def add_sound(self, sound: Sound.Sound):
         for i in range(len(self._channels)):
@@ -74,3 +83,31 @@ class SoundManager:
     def reset(self):
         self._channels = [pygame.mixer.Channel(i) for i in range(SoundManager._MAX_CHANNELS)]
         self._sounds = [None for i in range(SoundManager._MAX_CHANNELS)]
+
+    def all_pause(self):
+        for chanell in self._channels:
+            chanell.pause()
+
+    def all_unpause(self):
+        for chanell in self._channels:
+            chanell.unpause()
+
+    def pause(self, id_sound):
+        from src.Game.Sound import Sound
+        id_sound: Sound.SoundId
+        for i in range(len(self._sounds)):
+            element: int
+            self._sounds:List[Sound.Sound]
+            if self._sounds[i] and self._sounds[i].sound_id is id_sound:
+                self._channels[i].pause()
+                break
+    def unpause(self, id_sound):
+        from src.Game.Sound import Sound
+        id_sound: Sound.SoundId
+        for i in range(len(self._sounds)):
+            element: int
+            self._sounds:List[Sound.Sound]
+            if self._sounds[i] and self._sounds[i].sound_id is id_sound:
+                self._channels[i].unpause()
+                break
+

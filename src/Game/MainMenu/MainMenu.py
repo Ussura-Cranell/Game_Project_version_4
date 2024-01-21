@@ -35,18 +35,19 @@ class Init:
             animationmanager.update()
             scene.update()
             screen.blit(scene.camera.surface, scene.camera.rect)
-            pygame.display.update()
+            pygame.display.flip()
 
+            # print(f'Main menu')
             print(f'FPS: {window.clock.get_fps()}')
             print(f'Memory used: {gameinfo.takes_MB} MB')
-
-            window.clock.tick(30)
 
             if type(scene.uimanager.current_menu) is Menus.Close:
 
                 self._mode = scene.uimanager.button_id
                 scene.reset()
                 self._game_run = False
+
+            window.clock.tick(30)
 
     @property
     def mode(self) -> int:

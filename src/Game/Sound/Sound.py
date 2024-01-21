@@ -15,8 +15,13 @@ class SoundId(Enum):
     Memphis_Cult9Mm = auto()
     SOUND_PLAYER_STEP = auto()
 
+    SOUND_DIALOG = auto()
+
+    COVERING = auto()
+
 class SoundStorage:
     _sound_storage = None
+    _initialized = False
 
     def __new__(cls):
         if not cls._sound_storage:
@@ -24,9 +29,13 @@ class SoundStorage:
         return cls._sound_storage
 
     def __init__(self):
+        if SoundStorage._initialized: return None
         self._sounds = {}
+        SoundStorage._initialized = True
 
     def add_sound(self, sound_id: SoundId, sound):
+
+        # print(f'edded {SoundId, sound}')
         self._sounds[sound_id] = sound
 
     def get_sound(self, sound_id):

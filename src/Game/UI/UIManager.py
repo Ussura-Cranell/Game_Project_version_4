@@ -70,10 +70,11 @@ class UIManager:
 
         elif num is self._buttonid.PLAY_CONTINUE_MENU:
             self.change_menu(Menus.Close(self._camera.surface))
-            print("PLAY_MENU!")
+            self._soundmanager.all_unpause()
+            # print("PLAY_MENU!")
 
         elif num is self._buttonid.PLAY_QUIT_MENU:
-            print("PLAY_QUIT_MENU")
+            # print("PLAY_QUIT_MENU")
             self.change_menu(Menus.MainMenu(self._camera.surface))
 
 

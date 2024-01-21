@@ -1,5 +1,6 @@
 class EventManager:
     _event_manager = None
+    _initialized = False
 
     def __new__(cls):
         if not cls._event_manager:
@@ -7,7 +8,13 @@ class EventManager:
         return cls._event_manager
 
     def __init__(self):
+
+        if EventManager._initialized: return None
+
+        print('init EventManager')
         self._events = []
+
+        EventManager._initialized = True
 
     def __str__(self) -> str:
         line = str()

@@ -7,12 +7,12 @@ def x_y_transform_spritesheet_to_animation(spritesheet: pygame.Surface, image_si
     chunks: List[pygame.Surface] = []
     count = 0
 
-    print(f'image size: {size_spritesheet}')
+    # print(f'image size: {size_spritesheet}')
 
     for y in range(0, size_spritesheet[1], image_size[1]):
         for x in range(0, size_spritesheet[0], image_size[0]):
             rect = pygame.Rect(x, y, image_size[0], image_size[1])
-            print(f'{count} frame selected: ({x // image_size[0]}, {y // image_size[1]})')
+            # print(f'{count} frame selected: ({x // image_size[0]}, {y // image_size[1]})')
             chunk = spritesheet.subsurface(rect)
             count += 1
 
@@ -29,7 +29,7 @@ def y_x_transform_spritesheet_to_animation(spritesheet: pygame.Surface, image_si
     for x in range(0, size_spritesheet[0], image_size[0]):
         for y in range(0, size_spritesheet[1], image_size[1]):
             rect.update(x, y, image_size[0], image_size[1])
-            print(f'{count} frame selected: ({x / image_size[0]:.0f}, {y / image_size[1]:.0f})')
+            # print(f'{count} frame selected: ({x / image_size[0]:.0f}, {y / image_size[1]:.0f})')
             chunk = spritesheet.subsurface(rect)
             count += 1
             chunks.append(chunk)

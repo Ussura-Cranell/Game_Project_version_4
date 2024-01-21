@@ -10,6 +10,8 @@ class EventId(Enum):
     PLAYER_MOVE_DOWN = auto()
 
     PlAYER_PRESS_ESC = auto()
+    PLAYER_PRESS_E = auto()
+    PLAYER_PRESS_U = auto()
 
     PLAYER_RUN = auto()
 

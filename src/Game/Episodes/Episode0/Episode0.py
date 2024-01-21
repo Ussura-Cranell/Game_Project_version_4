@@ -27,39 +27,26 @@ class Init:
         animationmanager.update()
         screen = window.screen
 
-        self._shared_resources = {}
-        self._shared_resources['animationmanager'] = animationmanager
+        from . import SharedResources, SceneInitialization, GameLogic
 
-        from src.Game.Episodes.Episode0 import SceneInitialization
-        scene_init = SceneInitialization.SceneInitialization(self._shared_resources) # инициализация сцены
-
-        from . import GameLogic
-        gamelogic = GameLogic.GameLogic(self._shared_resources) # инициализация обработки событий
-
+        shared_resources = SharedResources.SharedResources()
+        scene_init = SceneInitialization.SceneInitialization()
         scene = scene_init.scene
-        scene.camera.set_zoom(-0.65)
-        self._shared_resources['scene'] = scene
-
-        from src.Game.GameObject.Entity import Player
-        player: Player.Player = self._shared_resources.get('player')
-        from src.Game.GameObject.StaticObject import Trigger
-        barriers: Set[Trigger.Trigger] = self._shared_resources.get('barriers')
+        gamelogic = GameLogic.GameLogic()
 
         while self._game_run:
             window.clear_console()
 
             if isinstance(scene.uimanager.current_menu, Menus.Close):
-                # print(animationmanager)
-                # print(soundmanager)
-
-                scene.camera.set_position(player.gameobject.rect.center)
 
                 inputevent.update()
                 gamelogic.update()
                 soundmanager.update()
                 animationmanager.update()
-                scene.update()
-                # scene.testing_barriers(barriers, self._shared_resources.get('verticale_testing_rect'), self._shared_resources.get('horizontale_testing_rect'))
+
+                if gameinfo.debugging_flag: scene.testing_barriers()
+                else: scene.update()
+
                 screen.blit(scene.camera.surface, scene.camera.rect)
                 pygame.display.flip()
 
@@ -74,8 +61,29 @@ class Init:
                 screen.blit(scene.camera.surface, scene.camera.rect)
                 pygame.display.flip()
 
-            elif isinstance(scene.uimanager.current_menu, Menus.MainMenu):
-                return scene.uimanager.button_id.PLAY_QUIT_MENU
+            elif isinstance(scene.uimanager.current_menu, Menus.DialogPanel) or \
+                    isinstance(scene.uimanager.current_menu, Menus.InformationPanel):
+                window.clear_console()
+                # print(f'Игровой диалог')
+                inputevent.update()
+                # animationmanager.update()
+                # inputevent.track_only_dialog_keys()
+                soundmanager.update()
+                scene.update()
+                screen.blit(scene.camera.surface, scene.camera.rect)
+                pygame.display.flip()
+                window.clock.tick(25)
 
-            print(f'FPS: {window.clock.get_fps()}')
+            elif isinstance(scene.uimanager.current_menu, Menus.MainMenu):
+                from src.Game.UI.Button import Button
+                self._mode = Button.ButtonId.PLAY_QUIT_MENU
+                self._game_run = False
+
+                pygame.time.delay(500)
+
+            print(f'FPS: {window.clock.get_fps():.0f}')
             print(f'Memory used: {gameinfo.takes_MB} MB')
+
+    @property
+    def mode(self) -> int:
+        return self._mode

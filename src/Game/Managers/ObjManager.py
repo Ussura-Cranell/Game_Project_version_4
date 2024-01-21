@@ -3,6 +3,7 @@ from typing import Dict, Set
 
 class GameObjectManager:
     _game_object_manager = None
+    _initialized = False
 
     def __new__(cls):
         if not cls._game_object_manager:
@@ -10,7 +11,13 @@ class GameObjectManager:
         return cls._game_object_manager
 
     def __init__(self):
+
+        if GameObjectManager._initialized: return None
+
+        # print('init GameObjectManager')
         self._objects_by_layer = {}
+
+        GameObjectManager._initialized = True
 
     def __str__(self) -> str:
         line = str()
@@ -32,16 +39,6 @@ class GameObjectManager:
 
     def get_dict(self) -> Dict:
         return self._objects_by_layer
-
-    def check_layer_collision(self):
-        'It is not recommended for use'
-
-        for layer in self._objects_by_layer.keys():
-            for value in self._objects_by_layer.get(layer):
-                for value2 in self._objects_by_layer.get(layer):
-                    if not value == value2:
-                        #Event.Event(Event.EventId.COLLISION_TWO_OBJECT)
-                        print(value.rect.colliderect(value2.rect))
 
     def reset(self):
         self._objects_by_layer = {}

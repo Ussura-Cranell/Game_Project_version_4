@@ -1,10 +1,11 @@
 from typing import Tuple, List
 import pygame.image
+from . import SharedResources
 import os
 
 
 class SceneInitialization:
-    def __init__(self, shared_resources: dict):
+    def __init__(self):
 
         def create_barrier(id: List[int], group, point_reference, ltop_pos: Tuple[int, int], x: int = 1, y: int = 1):
             from src.Game.GameObject.StaticObject import Trigger
@@ -18,7 +19,7 @@ class SceneInitialization:
                                     pos: Tuple[int, int]):
             from src.Game.GameObject.StaticObject import Decoration
             decoration = Decoration.Decoration(name=name, layer=layer, size=size)
-            print(f'name: {name}')
+            # print(f'name: {name}')
 
             image = pygame.image.load(os.path.join('src', 'Assets/Episodes/Episode0/level/') + name).convert_alpha()
             decoration.sprite.set_surface(image)
@@ -49,7 +50,7 @@ class SceneInitialization:
             group.add(trigger)
             return trigger
 
-        self._shared_resources = shared_resources
+        self._shared_resources = SharedResources.SharedResources().shared_resources
 
         from src.Game.Scene import Scene
         from src.Game.UI import Menus
@@ -66,10 +67,13 @@ class SceneInitialization:
         gameinfo = GameInfo.GameInfo()
 
         self._scene = Scene.Scene(gameinfo.screen_size, Menus.Close)
+        self._shared_resources['scene'] = self._scene
+
         self._sprite = Sprite
         self._sprite.Sprite.set_scene(self._scene)
 
         point_reference = [300, 100]
+        self._shared_resources['point_reference'] = point_reference
 
         # загрузка уровня -----------------------------------------------------------------------------
 
@@ -167,24 +171,27 @@ class SceneInitialization:
         create_object_barrier(id, 'duck56x67.png', 2, barriers, point_reference, (46, 192), (56, 67), 20)
 
         # проверка количества барьеров
-        print(f'len barriesr: {len(barriers)}')
+        # print(f'len barriesr: {len(barriers)}')
 
         # проверка пересечений барьеров
         for barrier1 in barriers:
             for barrier2 in barriers:
                 if barrier1 != barrier2:
                     if barrier1.gameobject.rect.colliderect(barrier2.gameobject.rect):
-                        print(f'пересечение {barrier1.gameobject.name} и {barrier2.gameobject.name}')
+                        # print(f'пересечение {barrier1.gameobject.name} и {barrier2.gameobject.name}')
                         #exit()
+                        pass
         # exit()
 
         self._shared_resources['barriers'] = barriers
 
         # загрузка игрока -------------------------------------------------------------------------------------------
 
-        player = Player.Player(name='Testing Player 1', size=(47, 45), layer=2)
+        player = Player.Player() # name='Testing Player 1', size=(47, 45), layer=2
+        player.Player_Reset()
         self._scene.get_layer(2).set_drawing_by_coordinates(True)
         player.set_movement_speed(5)
+        player.set_shared_resources(self._shared_resources)
 
 
         player_animation_sheet = pygame.image.load(os.path.join('src', 'Assets/Sprites/Entity/Human/player47x45.png'))
@@ -225,99 +232,24 @@ class SceneInitialization:
 
         player.set_current_animation(Animaton.AnimationId.PLAYER_MOVE_DOWN)
         animationmanager.add_animation_entity(player)
-        print(animationmanager)
+        # print(animationmanager)
 
-        player.gameobject.rect.topright = self._scene.surface.get_rect().center
-        self._shared_resources['player'] = player
+        player.gameobject.rect.topright = (point_reference[0] + 250, point_reference[1] + 390)
 
-        print(player.animations)
-        # exit()
 
-        from src.Game.GameObject.Entity import Entity
-        tv = Entity.Entity(name=str(id), layer=3, size=(50, 22))
-        tv.sprite.rect.topleft = (point_reference[0] + 524, point_reference[1] + 200)
-
-        dance_9mm = pygame.image.load(os.path.join('src', 'Assets/testAnimations/dancespritesheet.png'))
-        dance_9mm = Multitool.x_y_transform_spritesheet_to_animation(dance_9mm, (50, 22))
-        # exit()
-
-        animation = Animaton.Animation(id_animation.ANIMATION_1,
-                                           dance_9mm,
-                                           0,
-                                           True,
-                                           2,
-                                           False)
-        tv.add_animation(id_animation.ANIMATION_1, animation)
-
-        surface = pygame.Surface((50, 22))
-        surface.fill('black')
-        animation = Animaton.Animation(id_animation.NONE,
-                                       [surface],
-                                       0,
-                                       False,
-                                       2,
-                                       False)
-        tv.add_animation(id_animation.NONE, animation)
-
-        tv.set_current_animation(id_animation.NONE)
-        animationmanager.add_animation_entity(tv)
-        self._shared_resources['tv'] = tv
-
+        # print(player.animations)
 
         from src.Game.Sound import Sound
-        from src.Game.Managers import SoundManager
-        self._soundstorage = Sound.SoundStorage()
-        self._soundmanager = SoundManager.SoundManager()
-        tv_music = Sound.Sound(Sound.SoundId.Memphis_Cult9Mm,
-                               os.path.join('src', 'Assets/Music/Memphis Cult - 9MM (Lyrics) _ watch my 9mm go bang (256  kbps).mp3'),
-                               0,
-                               self.scene.surface.get_rect().center,
-                               tv.sprite.rect.center,
-                               400)
-        self._soundstorage.add_sound(Sound.SoundId.Memphis_Cult9Mm, tv_music)
 
-        self._shared_resources['soundstorage'] = self._soundstorage
-        self._shared_resources['tv_music'] = tv_music
+        self._scene.camera.set_zoom(-0.65)
 
-        from src.Game.GameObject.StaticObject import Trigger
-        self._shared_resources['tv_trigger'] = Trigger.Trigger('tv_trigger',
-                                                               (point_reference[0] + 496,
-                                                                point_reference[1] + 240),
-                                                               (96, 45))
+        Sound.Sound(Sound.SoundId.SOUND_DIALOG, os.path.join('src', 'Assets/Sounds/UI/Generic 2 Dialogue.mp3'), 0, None,
+                    None, -1)
 
-        from src.Game.GameObject.Entity import Entity
-        spikers = Entity.Entity(name=str(id), layer=1, size=(32, 64))
-        spikers.sprite.rect.topleft = (point_reference[0] + 593, point_reference[1] + 188)
 
-        spikers_animation = pygame.image.load(os.path.join('src', 'Assets/testAnimations/spikers.png'))
-        spikers_animation = Multitool.x_y_transform_spritesheet_to_animation(spikers_animation, (32, 64))
-
-        animation = Animaton.Animation(id_animation.ANIMATION_1,
-                                       spikers_animation,
-                                       0,
-                                       True,
-                                       2,
-                                       False)
-        spikers.add_animation(id_animation.ANIMATION_1, animation)
-        animation = Animaton.Animation(id_animation.NONE,
-                                       [spikers_animation[0]],
-                                       0,
-                                       False,
-                                       2,
-                                       False)
-        spikers.add_animation(id_animation.NONE, animation)
-
-        spikers.set_current_animation(id_animation.NONE)
-        animationmanager.add_animation_entity(spikers)
-        self._shared_resources['spikers'] = spikers
-
-        character_steps = Sound.Sound(Sound.SoundId.SOUND_PLAYER_STEP,
-                               os.path.join('src', 'Assets/Sounds/Other/player steps4.mp3'),
-                               -1,
-                               self.scene.surface.get_rect().center,
-                               self.scene.surface.get_rect().center,
-                               -1)
-        self._shared_resources['sound_step'] = character_steps
+        from src.Game.UI import Information
+        information1 = Information.Information(f'\n\nВзять "пульт от телевизора"?')
+        self.shared_resources['information1'] = information1
 
     @property
     def scene(self):

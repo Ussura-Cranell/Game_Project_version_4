@@ -5,6 +5,7 @@ import pygame
 
 class GameInfo:
     _game_info = None
+    _initialized = False
 
     def __new__(cls):
         if not cls._game_info:
@@ -12,10 +13,25 @@ class GameInfo:
         return cls._game_info
 
     def __init__(self):
+
+        if GameInfo._initialized: return None
+
+        # print('init GameInfo')
         self._game_title: str = 'The Noisses is killing'
         self._game_icon: pygame.Surface = pygame.Surface((100, 100))
         self._game_icon.fill((255, 255, 255))
         self._screen_size = (1200, 760)
+
+        GameInfo._initialized = True
+
+        self._debugging_flag = False
+
+    def set_debugging_flag(self, value:bool):
+        self._debugging_flag = value
+
+    @property
+    def debugging_flag(self):
+        return self._debugging_flag
 
     def _get_process_memory_usage(self):
         """
@@ -24,7 +40,6 @@ class GameInfo:
         process = psutil.Process()
         memory_info = process.memory_info()
         return memory_info.rss
-
 
     @property
     def game_title(self) -> str:
@@ -40,7 +55,7 @@ class GameInfo:
 
     @property
     def takes_MB(self) -> str:
-        return f'{self._get_process_memory_usage()/1024**2:.2f}'
+        return f'{self._get_process_memory_usage() / 1024 ** 2:.2f}'
 
     @property
     def takes_KB(self) -> str:

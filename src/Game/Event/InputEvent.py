@@ -37,6 +37,10 @@ class InputEvent:
 
                 elif event.key == pygame.K_ESCAPE:
                     Event.Event(Event.EventId.PlAYER_PRESS_ESC)
+                elif event.key == pygame.K_e:
+                    Event.Event(Event.EventId.PLAYER_PRESS_E)
+                elif event.key == pygame.K_u:
+                    Event.Event(Event.EventId.PLAYER_PRESS_U)
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
@@ -52,6 +56,10 @@ class InputEvent:
 
                 elif event.key == pygame.K_ESCAPE:
                     self._event_manager.del_event(Event.Event(Event.EventId.PlAYER_PRESS_ESC))
+                elif event.key == pygame.K_e:
+                    self._event_manager.del_event(Event.Event(Event.EventId.PLAYER_PRESS_E))
+                elif event.key == pygame.K_u:
+                    self._event_manager.del_event(Event.Event(Event.EventId.PLAYER_PRESS_U))
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == pygame.BUTTON_LEFT:
@@ -75,6 +83,22 @@ class InputEvent:
                 elif event.button == pygame.BUTTON_RIGHT:
                     self._event_manager.del_event(Event.Event(Event.EventId.MOUSE_RIGHT))
 
+            elif event.type == pygame.QUIT:
+                Event.Event(Event.EventId.WINDOW_CLOSE)
+                pygame.quit()
+                exit(0)
+    def track_only_dialog_keys(self):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    Event.Event(Event.EventId.PlAYER_PRESS_ESC)
+                elif event.key == pygame.K_e:
+                    Event.Event(Event.EventId.PLAYER_PRESS_E)
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_ESCAPE:
+                    self._event_manager.del_event(Event.Event(Event.EventId.PlAYER_PRESS_ESC))
+                elif event.key == pygame.K_e:
+                    self._event_manager.del_event(Event.Event(Event.EventId.PLAYER_PRESS_E))
             elif event.type == pygame.QUIT:
                 Event.Event(Event.EventId.WINDOW_CLOSE)
                 pygame.quit()

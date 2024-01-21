@@ -16,6 +16,10 @@ class ButtonId(Enum):
     PLAY_EXIT_MENU = auto()
     PLAY_CONTINUE_MENU = auto()
     PLAY_QUIT_MENU = auto()
+
+    # YES = auto()
+    # NO = auto()
+
     # PLAY_ENVENTORY = auto()
 
     BACK_BUTTON = auto()

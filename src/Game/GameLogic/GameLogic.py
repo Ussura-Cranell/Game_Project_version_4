@@ -25,7 +25,7 @@ class GameLogic:
         self._animation_player_old_state = 0
 
     def update(self):
-        print('GameLogic update')
+        # print('GameLogic update')
 
         if self._event_manager.search(Event.EventId.WINDOW_CLOSE) is not None:
             pygame.quit()
@@ -114,9 +114,9 @@ class GameLogic:
         # если игрое двигается
         if animation_player_state != 0:
             self._animation_player_old_state = animation_player_state
-            print('# игрок двигается, записывается предыдущая анимация')
+            # print('# игрок двигается, записывается предыдущая анимация')
         # если игрок не двигается и
         elif self._animation_player_old_state != 0:
-            print('# игрок не двигается, включение анимации "статика" по соответствующему направлению')
+            # print('# игрок не двигается, включение анимации "статика" по соответствующему направлению')
             self._animation_player_old_state = 0
 

@@ -14,6 +14,14 @@ class Scene:
         self._camera = Camera.Camera(self)
         self._uiManager = UIManager.UIManager(self._camera, current_menu)
 
+        from src.Game.Episodes.Episode0 import SharedResources
+        self._sharedresources = SharedResources.SharedResources().shared_resources
+        self._color_red = [255, 0, 0]
+        self._color_red_flag = False
+
+        self._color_green = [0, 255, 0]
+        self._color_green_flag = False
+
     def add_sprite(self, sprite):
         if sprite.layer_index >= len(self._layer_list):
             for i in range(len(self._layer_list), sprite.layer_index + 1):
@@ -55,12 +63,47 @@ class Scene:
     def reset(self):
         self._layer_list: List[Layer.Layer] = []
 
-    def testing_barriers(self, barriers, verticale_testing_rect = None, horizontale_testing_rect = None):
-        from src.Game.GameObject.StaticObject import Trigger
-        barriers: List[Trigger.Trigger]
+    def testing_barriers(self):
 
-        verticale_testing_rect: pygame.Rect = verticale_testing_rect
-        horizontale_testing_rect: pygame.Rect = horizontale_testing_rect
+        num = 15
+
+        if self._color_red_flag:
+            self._color_red[1] += num
+            self._color_red[2] += num
+
+            if self._color_red[1] > 255:
+                self._color_red[1] = 255
+                self._color_red[2] = 255
+                self._color_red_flag = False
+        else:
+            self._color_red[1] -= num
+            self._color_red[2] -= num
+
+            if self._color_red[1] < 0:
+                self._color_red[1] = 0
+                self._color_red[2] = 0
+                self._color_red_flag = True
+        num2 = 85
+
+        if self._color_green_flag:
+            self._color_green[0] += num2
+            self._color_green[2] += num2
+
+            if self._color_green[0] > 255:
+                self._color_green[0] = 255
+                self._color_green[2] = 255
+                self._color_green_flag = False
+        else:
+            self._color_green[0] -= num2
+            self._color_green[2] -= num2
+
+            if self._color_green[0] < 0:
+                self._color_green[0] = 0
+                self._color_green[2] = 0
+                self._color_green_flag = True
+
+        from src.Game.GameObject.StaticObject import Trigger
+        barriers:List[Trigger.Trigger] = self._sharedresources.get('barriers')
 
         self._surface.fill((10, 10, 10))
         for layer in self._layer_list:
@@ -68,16 +111,27 @@ class Scene:
             self._surface.blit(layer.surface, layer.surface.get_rect())
 
         for barrier in barriers:
-            color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            pygame.draw.rect(self._surface, color, barrier.gameobject.rect, 1)
+            pygame.draw.rect(self._surface, self._color_red, barrier.gameobject.rect, 1)
 
-        if verticale_testing_rect is not None:
-            color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            pygame.draw.rect(self._surface, color, verticale_testing_rect, 1)
+        horizontale_testing_rect = self._sharedresources.get('horizontale_testing_rect')
+        if horizontale_testing_rect:
+            pygame.draw.rect(self._surface, self._color_red, horizontale_testing_rect, 1)
 
-        if horizontale_testing_rect is not None:
-            color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-            pygame.draw.rect(self._surface, color, horizontale_testing_rect, 1)
+        refrigerator_area = self._sharedresources.get('refrigerator_area')
+        if refrigerator_area:
+            pygame.draw.rect(self._surface, self._color_green, refrigerator_area, 1)
+
+        tv_area = self._sharedresources.get('tv_area')
+        if tv_area:
+            pygame.draw.rect(self._surface, self._color_green, tv_area, 1)
+
+        creep_area = self._sharedresources.get('creep_area')
+        if creep_area:
+            pygame.draw.rect(self._surface, self._color_green, creep_area, 1)
+
+        bed_area = self._sharedresources.get('bed_area')
+        if bed_area:
+            pygame.draw.rect(self._surface, self._color_green, bed_area, 1)
 
         self._camera.update()
         self._uiManager.update()

@@ -1,5 +1,6 @@
 class AnimationManager:
     _animation_manager = None
+    _initialized = False
 
     def __new__(cls):
         if not cls._animation_manager:
@@ -7,7 +8,13 @@ class AnimationManager:
         return cls._animation_manager
 
     def __init__(self):
+
+        if AnimationManager._initialized: return None
+
+        print('init AnimationManager')
         self._animation_entitys = []
+
+        AnimationManager._initialized = True
 
     def __str__(self) -> str:
         line = str()
